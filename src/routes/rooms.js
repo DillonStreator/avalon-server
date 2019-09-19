@@ -14,7 +14,9 @@ router.get('/', (_, res) => {
 router.get('/:roomId', (req, res) => {
   const { roomId } = req.params;
   
-  Room.findById(roomId).exec()
+  Room.findById(roomId)
+    .populate('host')
+    .exec()
     .then(room => room.serialize())
     .then(serializedRoom => {
       res.status(200).send(serializedRoom);
